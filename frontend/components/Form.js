@@ -26,7 +26,7 @@ export default class Form extends React.Component {
             value={ this.state.value }
           />
           <button
-            onClick={ this.props.clearCompleted() }
+            onClick={ this.props.clearCompleted }
           >
             Clear Completed
           </button>

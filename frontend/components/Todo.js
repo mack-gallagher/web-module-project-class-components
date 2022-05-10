@@ -8,9 +8,9 @@ export default class Todo extends React.Component {
 
   render() {
     return (
-      <div className='Todo' id={this.props.id} >
-        <p className={ this.props.completed?'completed':'' }>
-          { this.props.name }
+      <div className='Todo' id={this.props.id} onClick={ this.props.toggleCompleted } >
+        <p id={this.props.id.toString()} className={ this.props.completed?'completed':'' }>
+          { this.props.name } { this.props.completed?'[X]':'[]' }
         </p>
       </div>
     )

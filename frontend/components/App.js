@@ -10,10 +10,31 @@ export default class App extends React.Component {
     this.state.todoList = [];
     this.state.currID = 0;
 
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleCompleted = this.toggleCompleted.bind(this);
+    this.clearCompleted = this.clearCompleted.bind(this);
   }
 
   toggleCompleted(evt) {
+
+    this.setState((state, props) => {
+      const notme = this.state.todoList.filter(x => !(x.id === parseInt(evt.target.id)));
+      const me = this.state.todoList.filter(x => x.id === parseInt(evt.target.id))[0];
+
+      console.log(me);
+
+      return {
+        todoList: [...notme,
+          { 
+            'name': me.name,
+            'id': me.id,
+            'completed': !(me.completed),
+          }
+        ].sort((a,b) => { return a.id-b.id })
+      }
+    });
+
+
   }
 
   handleSubmit = (evt) => {
@@ -29,13 +50,19 @@ export default class App extends React.Component {
                currID: this.state.currID + 1,
              };
     });
-    console.log(this);
   }
 
-  clearCompleted() {
-    return function() {
-      console.log('x');
-    }
+  clearCompleted(evt) {
+    evt.preventDefault();
+    this.setState((state, props) => {
+      const newList = this.state.todoList.filter(x => x.completed === false && x.name);
+
+      return {
+        'todoList': [...newList],
+        currID: this.state.currID
+      }
+    });
+
   }
 
   render() {
